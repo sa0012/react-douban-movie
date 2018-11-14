@@ -1,0 +1,50 @@
+.card-wrap {
+  margin: 15px;
+  height: 130px;
+  border-radius: 10px;
+  color: #ccc;
+
+  .rank-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    .desc {
+      vertical-align: top;
+      display: inline-block;
+      box-sizing: border-box;
+      text-align: center;
+      flex: 2;
+      color: #fff;
+
+      .name {
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      .brief {
+        font-size: 12px;
+      }
+    }
+
+    .rank-img {
+      vertical-align: top;
+      display: inline-block;
+      text-align: center;
+      flex: 3;
+
+      img {
+        display: inline-block;
+        width: 30%;
+        vertical-align: middle;
+
+        &.top {
+          width: 35%;
+        }
+      }
+
+    }
+
+  }
+}

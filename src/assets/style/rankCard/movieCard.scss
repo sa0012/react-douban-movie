@@ -1,0 +1,59 @@
+@import '../mixin.scss';
+
+.movie-card {
+  &.need-top {
+    padding-top: 50px;
+  }
+}
+
+.movie-item {
+  padding: 0px 15px;
+
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px;
+
+    &.is-border {
+      @include border-bottom-1px(#ccc);
+    }
+
+    .info-img {
+      margin-right: 15px;
+    }
+
+    .info-desc {
+      overflow: hidden;
+
+      .title {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .star,
+      .casts,
+      .director {
+        margin-bottom: 5px;
+        @include no-wrap;
+      }
+    }
+
+
+  }
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 12px;
+  color: #ccc;
+
+  .line-left {
+    width: 50px;
+    background: #ccc;
+    display: inline-block;
+    vertical-align: middle;
+    @include border-top-1px(#ccc);
+  }
+}

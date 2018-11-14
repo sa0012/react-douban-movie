@@ -1,0 +1,44 @@
+.rating-chart {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  box-sizing: border-box;
+
+  .star-group {
+    text-align: right;
+    color: #9E9E9E;
+    padding-right: 5px;
+
+    .star-height {
+      height: 15px;
+      line-height: 15px;
+      margin-bottom: 3px;
+    }
+  }
+
+  .star-pre {
+    flex: 1;
+
+    .group {
+      background-color: #9E9E9E;
+      height: 15px;
+      margin-bottom: 3px;
+      position: relative;
+
+      .on-light {
+        background-color: #ff9900;
+        height: 15px;
+        border-radius: 5px;
+      }
+
+      .percentage {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 15px;
+        color: #666;
+        font-size: 12px;
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.go-search {
+  height: 50px;
+  box-sizing: border-box;
+  padding: 10px 10px 5px 60px;
+  text-align: center;
+
+  .logo {
+    position: absolute;
+    left: 10px;
+  }
+
+  .search-content {
+    background-color: #eee;
+    font-size: 16px;
+    line-height: 35px;
+    border-radius: 5px;
+  }
+
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+}

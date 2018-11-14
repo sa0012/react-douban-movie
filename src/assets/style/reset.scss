@@ -1,0 +1,369 @@
+abbr,
+address,
+article,
+aside,
+audio,
+b,
+blockquote,
+body,
+canvas,
+caption,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+div,
+dl,
+dt,
+em,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+p,
+pre,
+q,
+samp,
+section,
+small,
+span,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+ul,
+var,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; // 去除iphone手机中点击区域黑色阴影
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html,
+body,
+#app,
+#root {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+}
+
+body {
+  line-height: 1;
+  background: rgb(235, 239, 248);
+  font-size: 14px;
+  font-family: San Francisco, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+input {
+  outline: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:after,
+blockquote:before,
+q:after,
+q:before {
+  content: '';
+  content: none;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  padding: 0;
+}
+
+input[type="text"],
+select {
+  vertical-align: middle;
+  -webkit-appearance: none;
+}
+
+textarea {
+  -webkit-appearance: none;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  // color: #13d9c8;
+}
+
+body {
+  background: #ebeff8;
+}
+
+#main {
+  max-width: 768px;
+  width: 100%;
+  margin: 0px auto;
+}
+
+/*1px 下划线*/
+
+.border_bottom,
+.border_top,
+.border_left,
+.border_right {
+  position: relative;
+}
+
+.border_bottom:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid #DFE3F1;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+.border_left:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  border-left: 1px solid #DFE3F1;
+  -webkit-transform: scaleX(0.5);
+  transform: scaleX(0.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+.border_right:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  border-right: 1px solid #DFE3F1;
+  -webkit-transform: scaleX(0.5);
+  transform: scaleX(0.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+.border_top:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #DFE3F1;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+// 三角形角标
+.triangle-topleft {
+  width: 0;
+  height: 0;
+  border-top: 100px solid red;
+  border-right: 100px solid transparent;
+}
+
+.triangle-topright {
+  width: 0;
+  height: 0; // border-top: 100px solid red;
+  border-left: 100px solid transparent;
+}
+
+.triangle-bottomleft {
+  width: 0;
+  height: 0; // border-bottom: 100px solid red;
+  border-right: 100px solid transparent;
+}
+
+.triangle-bottomright {
+  width: 0;
+  height: 0;
+  border-bottom: 9px solid #fff;
+  border-left: 9px solid transparent;
+}
+
+// 等腰三角形
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent; // border-bottom: 100px solid red;
+}
+
+.triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent; // border-top: 100px solid red;
+}
+
+.triangle-left {
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent; // border-right: 100px solid red;
+  border-bottom: 50px solid transparent;
+}
+
+.triangle-right {
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent; // border-left: 100px solid red;
+  border-bottom: 50px solid transparent;
+}
+
+// 自定义键盘组件样式
+.keyboard-tip {
+  box-sizing: border-box;
+  position: fixed;
+  background: white;
+  margin: 0 auto;
+  width: 50px;
+  height: 54px;
+  line-height: 54px;
+  color: #418af9;
+  font-size: 28px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  box-shadow: 0 1px 2px #dddddd;
+  z-index: 999;
+  top: -100px;
+}
+
+@keyframes ry-slide-bottom-enter {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes ry-slide-bottom-leave {
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+.ry-slide-bottom {
+  &-enter-active {
+    animation: ry-slide-bottom-enter 0.3s both ease;
+  }
+  &-leave-active {
+    animation: ry-slide-bottom-leave 0.3s both ease;
+  }
+}
+
+.clearfix:before {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0
+}

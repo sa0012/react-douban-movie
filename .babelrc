@@ -1,0 +1,12 @@
+{
+  "presets": ["env", "react"],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "syntax-dynamic-import",
+    ["import", {
+      "libraryName": "antd-mobile",
+      "style": "css"
+    }]
+  ]
+}
