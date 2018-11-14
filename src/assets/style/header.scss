@@ -54,6 +54,7 @@
   align-items: center;
   left: 50px;
   color: #fff;
+  animation: slide 0.5s ease-out; 
 
   .title-avatar {
     width: 24px;
@@ -63,5 +64,17 @@
 
   .title-mc-title {
     padding-bottom: 3px;
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+
+  to {
+    opacity: 1;
+    height: 50px;
   }
 }
