@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { getMovieDetail, getMovieReview, getAllReviews, getAllComments } from '../../store/actions/movie-detail';
 import { bindActionCreators } from 'redux';
+import { DefaultPlayer as Video } from 'react-html5video';
+import 'react-html5video/dist/styles.css';
 import $ from '../../util';
 import '../../assets/style/movieDetail/index.scss';
 
@@ -30,7 +32,8 @@ class MovieDetial extends Component {
       detailContent: {},
       bannerImg: '',
       rating: {},
-      allCasts: []
+      allCasts: [],
+      bloopers: []
     }
   }
 
@@ -72,7 +75,8 @@ class MovieDetial extends Component {
         detailContent: data,
         bannerImg: data.images.small,
         rating: data.rating,
-        allCasts: allCasts
+        allCasts: allCasts,
+        bloopers: data.bloopers
       });
     })
   }
@@ -135,6 +139,8 @@ class MovieDetial extends Component {
         {this.movieTagsRender(detail.tags)}
         {this.movieIntroductionRender(detail.summary)}
         {this.moviePersonRender(detail)}
+        {this.bloopersRender(detail)}
+        {this.shortRatingRender(detail)}
       </div>
     );
   }
@@ -203,7 +209,7 @@ class MovieDetial extends Component {
     );
   }
 
-
+  // 影人
   moviePersonRender = () => {
     const allCasts = this.state.allCasts;
     return (
@@ -229,13 +235,106 @@ class MovieDetial extends Component {
                     key={index}
                   >
                     <img className="casts-avatar" src={cast.castsAvatar} alt="" />
-                    <div className="casts-name">{ cast.name }</div>
+                    <div className="casts-name">{cast.name}</div>
+                    <div className="casts-type">{cast.personType}</div>
                   </li>
                 );
               })
             }
 
           </ul>
+        </div>
+      </div>
+    );
+  }
+
+  // 花絮
+  bloopersRender = () => {
+    const bloopers = this.state.bloopers;
+    return (
+      <div className="movie-person">
+        <div className="person-top">
+          <h3 className="person-title">花絮</h3>
+          <div className="person-text">
+            <span className="text-all">全部65</span>
+            <i className="iconfont icon-keyboard_arrow_right person-back"></i>
+          </div>
+        </div>
+
+        <div className="movie-tags" style={{ width: '100%' }}>
+          <ul className="casts-list">
+            {
+              bloopers && bloopers.length > 0 && bloopers.map((cast, index) => {
+                return (
+                  <li
+                    className={classNames({
+                      'casts-item': true,
+                      'is-right': index !== bloopers.length - 1
+                    })}
+                    key={index}
+                  >
+                    {/* <img className="casts-avatar" src={cast.castsAvatar} alt="" /> */}
+                    <Video autoPlay loop muted
+                      controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
+                      poster="http://sourceposter.jpg"
+                      onCanPlayThrough={() => {
+                        // Do stuff
+                      }}>
+                      <source src="http://sourcefile.webm" type="video/webm" />
+                      <track label="English" kind="subtitles" srcLang="en" src="http://source.vtt" default />
+                    </Video>
+                  </li>
+                );
+              })
+            }
+
+          </ul>
+        </div>
+      </div>
+    );
+  }
+
+  // 短评
+  shortRatingRender = (detail) => {
+    const popularReviews = detail.popular_reviews || []
+    return (
+      <div className="short-rating">
+        <div className="short-rating-inner">
+          <div className="person-top short-top">
+            <h3 className="person-title">短评</h3>
+            <div className="person-text">
+              <span className="text-all" style={{ color: '#666' }}>全部{ detail.comments_count }</span>
+              <i className="iconfont icon-keyboard_arrow_right person-back" style={{ color: '#666' }}></i>
+            </div>
+          </div>
+
+          <ul className="rating-content">
+            {
+              popularReviews.length > 0 && popularReviews.map((rating, index) => {
+                return (
+                  <li className="rating-item">
+                    <div className="rating-title">{rating.title}</div>
+                    <div className="rating-user-wrap">
+                      <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
+                      <div className="rat-user-name">
+                        <span className="avatar-name">{rating.author.name}</span>
+                        <Star size={24}
+                          score={(rating.rating.value - 0) * 2}
+                          showScore={false}
+                          needNullStar={true} />
+                      </div>
+                      <i className="iconfont icon-collect rating-icon-edit"></i>
+                    </div>
+                    <div className="rating-summary">{ rating.summary }</div>
+                  </li>
+                );
+              })
+            }
+          </ul>
+          <div className="all-rating">
+            <span className="all-rating-text">查看全部短评</span>
+            <i className="iconfont icon-keyboard_arrow_right all-rating-right"></i>
+          </div>
         </div>
       </div>
     );

@@ -279,31 +279,33 @@
 .movie-person {
   padding: 15px;
 
-  .person-top {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    font-size: 16px;
 
-    .person-title,
-    .person-text {
-      flex: 1;
+}
+
+.person-top {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+
+  .person-title,
+  .person-text {
+    flex: 1;
+  }
+
+  .person-text {
+    text-align: right;
+    font-size: 14px;
+    color: #1F3644;
+
+    .text-all,
+    .person-back {
+      display: inline-block;
+      vertical-align: middle;
     }
 
-    .person-text {
-      text-align: right;
-      font-size: 14px;
-      color: #1F3644;
-
-      .text-all,
-      .person-back {
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      .person-back {
-        font-size: 20px;
-      }
+    .person-back {
+      font-size: 20px;
     }
   }
 }
@@ -318,13 +320,95 @@
 
   .casts-item {
     display: inline-block;
+    color: #fff;
+
     &.is-right {
       margin-right: 10px;
     }
+
     .casts-avatar {
       width: 90px;
       height: 120px;
       background-color: none;
+    }
+
+    .casts-name {
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+  }
+}
+
+.short-rating {
+  padding: 15px;
+
+  .short-rating-inner {
+    border-radius: 5px;
+    background: #1F3644;
+    padding: 15px;
+    box-sizing: border-box;
+
+    .short-top {
+      padding-bottom: 20px;
+    }
+
+    .rating-item {
+      @include border-bottom-1px(#ccc);
+      margin: 15px 0;
+      padding: 15px 0;
+      .rating-title {
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        padding-bottom: 15px;
+      }
+
+      .rating-user-wrap {
+        display: flex;
+        align-items: center;
+        color: #fff;
+
+        .rat-user-avatar {
+          border-radius: 1000px;
+        }
+
+        .rat-user-avatar {
+          margin-right: 10px;
+        }
+
+        .avatar-name {
+          display: inline-block;
+          margin-bottom: 5px;
+        }
+
+        .rating-icon-edit {
+          flex: 1;
+          text-align: right;
+        }
+      }
+
+    }
+    .rating-summary {
+      color: #fff;
+      padding-top: 15px;
+      line-height: 1.5em;
+      @include no-many-wrap(2);
+    }
+  }
+
+  .all-rating {
+    padding: 10px 0;
+    color: green;
+    text-align: center;
+
+    .all-rating-text, .all-rating-right {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .all-rating-right {
+      text-align: right;
+      font-size: 24px;
     }
   }
 }

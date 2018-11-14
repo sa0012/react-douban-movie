@@ -155,7 +155,17 @@ let utils = {
         func(event)
       }, wait); // 指定 xx ms 后触发真正想进行的操作 handler
     };
-  }
+  },
+  get: (url, params = {}, method = 'get') => new Promise((resolve, reject) => {
+    console.log(url, params)
+    let req = method === 'get' ? { params: params } : params
+    window.axios[method](url, req).then(res => {
+      resolve && res && typeof res.data !== 'undefined' && resolve(res.data)
+    }, error => {
+      reject && reject(error)
+    })
+  }),
+  post: (url, params) => utils.get(url, params, 'post'),
 }
 
 export default utils

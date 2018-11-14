@@ -9,9 +9,8 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import Route from './route';
-import './axios/axios';
 import { createBrowserHistory } from "history";
-import { Router, HashRouter } from 'react-router-dom'
+import { Router, HashRouter } from 'react-router-dom';
 
 const history = createBrowserHistory();
 

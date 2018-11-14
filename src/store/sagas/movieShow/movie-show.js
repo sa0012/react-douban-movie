@@ -26,7 +26,7 @@ function* getMovieAsync(action) {
   });
 
   Toast.loading('正在请求中...', 0, false);
-  return new Promise((resolve, reject) => {
+  yield new Promise((resolve, reject) => {
     axios.get(url, {
       params: data
     }).then(res => {
@@ -47,7 +47,7 @@ function* getComingMovieAsync(action) {
   });
 
   Toast.loading('正在请求中...', 0, false);
-  return axios.get(url, {
+  yield axios.get(url, {
     params: data
   }).then(res => {
     Toast.hide();
