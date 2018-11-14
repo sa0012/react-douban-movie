@@ -33,11 +33,13 @@ class MovieDetial extends Component {
       bannerImg: '',
       rating: {},
       allCasts: [],
-      bloopers: []
+      bloopers: [],
+      isShowTop: false
     }
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
     const { pathname } = this.props.history.location;
     let detailId = pathname.split('/')[2];
     this.setState({
@@ -46,9 +48,25 @@ class MovieDetial extends Component {
     this.searchMovieDetail(detailId);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+  handleScroll = (e) => {
+    let top = document.documentElement.scrollTop || document.body.scrollTop;
+    if (top > 50) {
+      this.setState({
+        isShowTop: true
+      })
+    } else {
+      this.setState({
+        isShowTop: false
+      })
+    }
+  }
+
+
   searchMovieDetail = (detailId) => {
     this.props.getMovieDetail(detailId, data => {
-      console.log(data)
       let allCasts = [];
       let directors = JSON.parse(JSON.stringify(data.directors)) || [];
       let casts = JSON.parse(JSON.stringify(data.casts)) || [];
@@ -61,7 +79,6 @@ class MovieDetial extends Component {
         }
       });
 
-      console.log(allCasts)
 
       casts.length > 0 && casts.forEach((casts, index) => {
         if (casts.avatars !== null) {
@@ -273,16 +290,16 @@ class MovieDetial extends Component {
                     })}
                     key={index}
                   >
-                    {/* <img className="casts-avatar" src={cast.castsAvatar} alt="" /> */}
-                    <Video autoPlay loop muted
+                    <img className="video-avatar" src={$.replaceUrl(cast.small)} alt="" />
+                    {/* <Video autoPlay loop muted
                       controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
-                      poster="http://sourceposter.jpg"
+                      poster={ $.replaceUrl(cast.small) }
                       onCanPlayThrough={() => {
                         // Do stuff
                       }}>
                       <source src="http://sourcefile.webm" type="video/webm" />
                       <track label="English" kind="subtitles" srcLang="en" src="http://source.vtt" default />
-                    </Video>
+                    </Video> */}
                   </li>
                 );
               })
@@ -303,7 +320,7 @@ class MovieDetial extends Component {
           <div className="person-top short-top">
             <h3 className="person-title">短评</h3>
             <div className="person-text">
-              <span className="text-all" style={{ color: '#666' }}>全部{ detail.comments_count }</span>
+              <span className="text-all" style={{ color: '#666' }}>全部{detail.comments_count}</span>
               <i className="iconfont icon-keyboard_arrow_right person-back" style={{ color: '#666' }}></i>
             </div>
           </div>
@@ -312,7 +329,7 @@ class MovieDetial extends Component {
             {
               popularReviews.length > 0 && popularReviews.map((rating, index) => {
                 return (
-                  <li className="rating-item">
+                  <li className="rating-item" key={index}>
                     <div className="rating-title">{rating.title}</div>
                     <div className="rating-user-wrap">
                       <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
@@ -325,7 +342,7 @@ class MovieDetial extends Component {
                       </div>
                       <i className="iconfont icon-collect rating-icon-edit"></i>
                     </div>
-                    <div className="rating-summary">{ rating.summary }</div>
+                    <div className="rating-summary">{rating.summary}</div>
                   </li>
                 );
               })
@@ -377,19 +394,40 @@ class MovieDetial extends Component {
   }
 
   titleItem = () => {
-    return (
-      <div className="title-center">
-        <i className="iconfont icon-video-camera"></i>
-        <span style={{ marginLeft: '5px' }}>电影</span>
-      </div>
-    );
+    const isShowTop = this.state.isShowTop;
+    if (!isShowTop) {
+      return (
+        <div className="title-center">
+          <i className="iconfont icon-video-camera"></i>
+          <span style={{ marginLeft: '5px' }}>电影</span>
+        </div>
+      );
+    }
+  }
+
+  showMovieTitle = () => {
+    const isShowTop = this.state.isShowTop;
+    if (isShowTop) {
+      return (
+        <div className="movie-title-center">
+          <img src={ $.replaceUrl(this.state.bannerImg) } className="title-avatar" alt="" />
+          <div className="title-movie-content">
+            <div className="title-mc-title">毒液: 致命守护者</div>
+            <Star size={24}
+              score={this.state.rating.average}
+              showScore={true}
+              needNullStar={true} />
+          </div>
+        </div>
+      );
+    }
   }
 
   render() {
     const detail = this.state.detailContent;
-    console.log(detail.countries)
     return (
       <div className="movie-detail">
+        { this.showMovieTitle() }
         <Header
           titleItem={this.titleItem}
           bgColor={'#30566B'}

@@ -1,4 +1,5 @@
 @import './mixin.scss';
+
 .header {
   @include border-bottom-1px(#ccc);
   position: fixed;
@@ -13,7 +14,10 @@
   display: flex;
   z-index: 333;
   background: rgba(0, 0, 0, 0.7);
-  .left-item, .title-item, .right-item {
+
+  .left-item,
+  .title-item,
+  .right-item {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -23,6 +27,7 @@
 
   .left-item {
     text-align: left;
+
     .header-back {
       width: 100%;
       display: flex;
@@ -38,5 +43,25 @@
 
   .right-item {
     text-align: right;
+  }
+}
+
+.movie-title-center {
+  position: fixed;
+  z-index: 4444;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  left: 50px;
+  color: #fff;
+
+  .title-avatar {
+    width: 24px;
+    margin-right: 10px;
+    border-radius: 3px;
+  }
+
+  .title-mc-title {
+    padding-bottom: 3px;
   }
 }

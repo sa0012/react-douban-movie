@@ -30,7 +30,6 @@ class RatingChart extends Component {
     setTimeout(() => {
       try {
         const preWidth = document.querySelector('.group').clientWidth || 0;
-        console.dir(preWidth, 'preWidth')
         this.setState({
           preWidth: preWidth
         });
@@ -45,13 +44,11 @@ class RatingChart extends Component {
     for (let score in scoreObj) {
       totalScore += scoreObj[score];
     }
-    console.log(totalScore, 'eeeeeellll')
 
     for (let k in scoreObj) {
       everyScore.push(scoreObj[k] / totalScore)
     }
 
-    console.log(everyScore, 'nnmmmss')
     this.setState({
       everyScoreArr: everyScore
     })
