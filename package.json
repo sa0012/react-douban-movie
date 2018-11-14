@@ -2,6 +2,7 @@
   "name": "redux-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "antd-mobile": "^2.2.6",
     "autoprefixer": "7.1.6",
@@ -122,6 +123,5 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "proxy": "http://api.douban.com/v2/movie"
+  }
 }

@@ -9,7 +9,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import Route from './route';
-import axios from 'axios';
+import './axios/axios';
 import { createBrowserHistory } from "history";
 import { Router, HashRouter } from 'react-router-dom'
 
@@ -19,8 +19,6 @@ const history = createBrowserHistory();
 const ModeRouter = Object.is(process.env.NODE_ENV, 'development')
   ? Router
   : HashRouter
-
-window.axios = axios
 
 FastClick.attach(document.body);
 
