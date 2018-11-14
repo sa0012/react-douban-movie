@@ -19,7 +19,7 @@ import {
 } from 'antd-mobile';
 
 function* getMovieAsync(action) {
-  const url = '/in_theaters';
+  const url = '/v2/movie/in_theaters';
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count
@@ -40,7 +40,7 @@ function* getMovieAsync(action) {
 }
 
 function* getComingMovieAsync(action) {
-  const url = '/coming_soon';
+  const url = '/v2/movie/coming_soon';
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count

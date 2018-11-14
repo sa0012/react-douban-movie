@@ -7,7 +7,7 @@ import {
 } from 'antd-mobile';
 
 function* getMovieDetailAsync(action) {
-  const url = `/subject/${ action.payload.id }`;
+  const url = `/v2/movie/subject/${ action.payload.id }`;
   const data = Object.assign({}, commonParams);
   Toast.loading('正在请求中...', 0, false);
   yield axios.get(url, {
@@ -21,7 +21,7 @@ function* getMovieDetailAsync(action) {
 }
 
 function* getMovieReviewAsync(action) {
-  const url = `/review/${ action.payload.id }`;
+  const url = `/v2/movie/review/${ action.payload.id }`;
   const data = Object.assign({}, commonParams);
   Toast.loading('正在请求中...', 0, false);
   yield axios.get(url, {
@@ -35,7 +35,7 @@ function* getMovieReviewAsync(action) {
 }
 
 function* getAllReviewsAsync(action) {
-  const url = `/subject/${ action.payload.id }/reviews`;
+  const url = `/v2/movie/subject/${ action.payload.id }/reviews`;
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count
@@ -52,7 +52,7 @@ function* getAllReviewsAsync(action) {
 }
 
 function* getAllCommentsAsync(action) {
-  const url = `/subject/${ action.payload.id }/comments`;
+  const url = `/v2/movie/subject/${ action.payload.id }/comments`;
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count

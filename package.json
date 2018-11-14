@@ -125,5 +125,13 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "http://api.douban.com/v2/movie"
+  "proxy": {
+    "/v2": {
+      "target": "https://api.douban.com",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/v2": "/v2"
+      }
+    }
+  }
 }

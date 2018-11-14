@@ -19,7 +19,7 @@ import {
 } from 'antd-mobile';
 
 function* top250RankAsync(action) {
-  const url = '/top250';
+  const url = '/v2/movie/top250';
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count
@@ -37,7 +37,7 @@ function* top250RankAsync(action) {
 }
 
 function* usBoxRankAsync(action) {
-  const url = '/us_box';
+  const url = '/v2/movie/us_box';
   const data = Object.assign({}, commonParams);
 
   // yield Toast.loading('正在请求中2...', 0, false);
@@ -52,7 +52,7 @@ function* usBoxRankAsync(action) {
 }
 
 function* weeklyRankAsync(action) {
-  const url = '/weekly';
+  const url = '/v2/movie/weekly';
   const data = Object.assign({}, commonParams);
 
   // yield Toast.loading('正在请求中3...', 0, false);
@@ -67,7 +67,7 @@ function* weeklyRankAsync(action) {
 }
 
 function* newMoviesRankAsync(action) {
-  const url = '/new_movies';
+  const url = '/v2/movie/new_movies';
   const data = Object.assign({}, commonParams);
 
   // yield Toast.loading('正在请求中4...', 0, false);

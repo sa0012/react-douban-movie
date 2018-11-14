@@ -7,7 +7,7 @@ import {
 } from 'antd-mobile';
 
 function* movieSearchAsync(action) {
-  const url = '/search';
+  const url = '/v2/movie/search';
   console.log(action, 'action')
   const data = Object.assign({}, commonParams, {
     q: action.payload.query,
@@ -27,7 +27,7 @@ function* movieSearchAsync(action) {
 }
 
 function* tagSearchAsync(action) {
-  const url = '/search';
+  const url = '/v2/movie/search';
   const data = Object.assign({}, commonParams, {
     tag: action.payload.tag,
     start: action.payload.start,
