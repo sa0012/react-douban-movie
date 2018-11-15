@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="bubble" style="position: fixed;right:5px;top:60%;width:50px;height: 50px;padding:3.5px;background:rgba(255,255,255,.64);border-radius: 25px;box-sizing:border-box;box-shadow: 0 0 10px rgba(0,0,0,.3);">
+    <div style="width:43px;height: 43px;background:#efefef;border-radius: 25px;text-align: center;"><img style="max-width: 43px;max-height: 43px;border-radius: 25px;"
+        src="http://img.ucweb.com/n/nav/15/6T3386aL-ha73KNPnf.jpeg" alt=""></div>
+    <div style="position: absolute;bottom:2px;left:50%;margin-left:-16.9px;width:39px;height: 15px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAAAeCAMAAABezWPbAAAAk1BMVEUAAAD4MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU74MU75Wm78t776gI74MU7////92dz6eYf+7e78rbX8w8n5WW34R176h5T/9vf+4+X8uL/7oar7lJ/5anv9ztPmQ70XAAAAIHRSTlMABRLEqYJcT/HWjTQoC+RAn3ZxIBrds2r36c26l/vmqizHIfQAAAHmSURBVEjHvZYNc6IwEIZP+VJUELW2Ve8um4TwKfD/f93tRjo0UCtq515HZDLyuPvubuKvn9Fk6S5+hrT1fGvG2O5p0NRz9u9My34KtAo39gvr9HCik8Xres5MWQ+Rlq5vvbGhwntBO885ztjX2t/ldhjtgx4gO3f3b9snTBIpXoB3C864lvz757cJIg4HZdLmk3EtWUJmBAVS0yBhCaiuO8a1JKuKC61WnJ81qMKLBIXgmLWKbrakqQpIvA2OcwVJR7NHup0w1gBFBkXC0oKeV3BGGqYpQLR9uxrXklJSavWHewJy/IE8T3mD0KqlvUxNlj9oyUwJ1lYt1kZBFvMcgAAx4AujlVgJVLDru37o084gdSwlgkERDcXLjJ5PZQ6xXtKw5bCIVh9XoDuXqqVQUKZNTSHLWFeE1kXOKc3tVxWwe7Qa8hQjpHwloFkgddfSAn18zJSlPRsq6uFiUPimgBpCKJBVVkDRVrrV6eoIhIE5QBJECRcPKT2lnUvZJ83c7yZgbQ42FFxebhodkBC18YXjjW0jNJq3gXasZcmGCtzbe8bm/VOuORgYI0lnNeroiIIu1yq5wvKno08Q98i+lfW6um//jw7XUHNn+dCp6x8GpLW7e+avhbdxTjbq5Gy8Beb3v/UPD6eGJNyuYigAAAAASUVORK5CYII=)no-repeat center center;background-size:39px 15px;"></div>
+  </div>
+</body>
+
+</html>
+<script>
+  /* 浮标拖动动作 */
+  var drag = document.getElementById('bubble'),
+    winWeight = window.innerWidth,
+    middleWin = winWeight / 2,
+    endTouchX = 0;
+
+  drag.addEventListener('touchstart', function (ev) {
+
+    document.addEventListener('touchmove', function (ev) {
+      ev.preventDefault();
+      var ev = ev.touches[0];
+      drag.style.top = (ev.pageY - 25) + 'px';
+      drag.style.left = (ev.pageX - 25) + 'px';
+      endTouchX = ev.pageX;
+    }, false)
+    document.addEventListener('touchend', function (ev) {
+
+      document.ontouchmove = null;
+      document.ontouchend = null;
+
+      // drag.style.top = '60%';
+      // if (endTouchX > 0 && endTouchX < middleWin) { //停靠左边
+      //   drag.style.left = '5px';
+      // } else { //停靠右边
+      //   drag.style.left = 'auto';
+      //   drag.style.right = '5px';
+      // }
+
+    }, false)
+  }, false)
+</script>

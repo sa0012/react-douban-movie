@@ -45,9 +45,15 @@ class RatingChart extends Component {
       totalScore += scoreObj[score];
     }
 
-    for (let k in scoreObj) {
-      everyScore.push(scoreObj[k] / totalScore)
+    if (totalScore) {
+      for (let k in scoreObj) {
+        everyScore.push(scoreObj[k] / totalScore)
+      }
+    } else {
+      everyScore = [0, 0, 0, 0, 0]
     }
+
+    
 
     this.setState({
       everyScoreArr: everyScore
@@ -56,7 +62,7 @@ class RatingChart extends Component {
 
   render() {
     const { starGroup1, starGroup2, starGroup3, starGroup4, starGroup5 } = this.state;
-    let everyScore = this.state.everyScoreArr || [0, 0, 0, 0, 0];
+    let everyScore = this.state.everyScoreArr;
     const preWidth = this.state.preWidth;
     return (
       <div className="rating-chart">

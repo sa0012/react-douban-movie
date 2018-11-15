@@ -7,7 +7,9 @@ import { bindActionCreators } from 'redux';
 import { DefaultPlayer as Video } from 'react-html5video';
 import 'react-html5video/dist/styles.css';
 import $ from '../../util';
+import { Tabs } from 'antd-mobile';
 import '../../assets/style/movieDetail/index.scss';
+import '../../assets/style/movieDetail/tabs.scss';
 
 import Header from '../../components/Header';
 import Star from '../../components/star';
@@ -34,11 +36,17 @@ class MovieDetial extends Component {
       rating: {},
       allCasts: [],
       bloopers: [],
-      isShowTop: false
+      isShowTop: false,
+      commentStart: 0,
+      commnetDistance: 0,
+      clientHeight: Node
     }
   }
 
   componentDidMount() {
+    this.setState({
+      clientHeight: (document.body.clientHeight || document.documentElement.clientHeight) - 60
+    })
     window.addEventListener('scroll', this.handleScroll);
     const { pathname } = this.props.history.location;
     let detailId = pathname.split('/')[2];
@@ -375,7 +383,7 @@ class MovieDetial extends Component {
                 <Star size={36}
                   score={rating.average}
                   showScore={false}
-                  needNullStar={true} />
+                  needNullStar={rating.average ? true : false} />
               </div>
               <div className="score-pre">
                 <RatingChart
@@ -405,34 +413,132 @@ class MovieDetial extends Component {
     }
   }
 
-  showMovieTitle = () => {
+  showMovieTitle = (detail) => {
     const isShowTop = this.state.isShowTop;
     if (isShowTop) {
       return (
         <div className="movie-title-center">
-          <img src={ $.replaceUrl(this.state.bannerImg) } className="title-avatar" alt="" />
+          <img src={$.replaceUrl(this.state.bannerImg)} className="title-avatar" alt="" />
           <div className="title-movie-content">
-            <div className="title-mc-title">毒液: 致命守护者</div>
+            <div className="title-mc-title">{ detail.title }</div>
             <Star size={24}
               score={this.state.rating.average}
               showScore={true}
-              needNullStar={true} />
+              needNullStar={this.state.rating.average ? true : false} />
           </div>
         </div>
       );
     }
   }
 
+  handleChangeTabs = (tab, index) => {
+    console.log(tab, index)
+    document.querySelector('.rating-tabs-wrap').style.top = `51px`;
+  }
+
+  commentTouchStart = (e) => {
+    e.persist()
+    let start = e.changedTouches[0].clientY
+    this.setState({
+      commentStart: start
+    })
+    document.body.style.overflow = document.documentElement.style.overflow = 'hidden';
+  }
+
+  commentTouchMove = (e) => {
+    let currentDisY = e.changedTouches[0].clientY;
+    if (currentDisY >= 51 && currentDisY <= this.state.clientHeight - 2) {
+      document.querySelector('.rating-tabs-wrap').style.top = `${currentDisY}px`;
+      // this.setState({
+      //   commnetDistance: currentDisY
+      // })
+    }
+  }
+
+  commentTouchEnd = (e) => {
+    const halfHeight = this.state.clientHeight / 2;
+    let currentDisY = e.changedTouches[0].clientY;
+    document.body.style.overflow = document.documentElement.style.overflow = 'initial';
+    if (currentDisY < halfHeight) {
+      document.querySelector('.rating-tabs-wrap').style.top = `51px`;
+    } else {
+      document.querySelector('.rating-tabs-wrap').style.top = '603px';
+    }
+  }
+
+  commentTabRender = (detail) => {
+    const tabs = [
+      { title: '影评' },
+      { title: '短评' },
+    ];
+    const popularReviews = detail.popular_reviews || []
+    return (
+      <div className="rating-tabs-wrap">
+        <div
+          className="comment-tabs-wrap"
+          ref="comment"
+          onTouchStart={this.commentTouchStart}
+          onTouchMove={this.commentTouchMove}
+          onTouchEnd={this.commentTouchEnd}
+        >
+          <div className="tabs-line"></div>
+          <Tabs
+            tabs={tabs}
+            initialPage={0}
+            tabBarUnderlineStyle={{ borderColor: '#42bd56' }}
+            tabBarActiveTextColor="#42bd56"
+            tabBarInactiveTextColor="#666"
+            swipeable={false}
+            onChange={(tab, index) => this.handleChangeTabs(tab, index)}
+          >
+            {
+              (tabs || []).map((item, index) => {
+                return (
+                  <div key={index}>
+                    <ul className="rating-content" style={{ backgroundColor: '#fff', padding: '15px', color: '#666' }}>
+                      {
+                        popularReviews.length > 0 && popularReviews.map((rating, index) => {
+                          return (
+                            <li className="rating-item" key={index} style={{ margin: 0 }}>
+                              <div className="rating-title" style={{ color: '#666' }}>{rating.title}</div>
+                              <div className="rating-user-wrap" style={{ paddingBottom: '10px' }}>
+                                <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
+                                <div className="rat-user-name">
+                                  <span className="avatar-name" style={{ color: '#666' }}>{rating.author.name}</span>
+                                  <Star size={24}
+                                    score={(rating.rating.value - 0) * 2}
+                                    showScore={false}
+                                    needNullStar={(rating.rating.value - 0) ? true : false} />
+                                </div>
+                                <i className="iconfont icon-collect rating-icon-edit" style={{ color: '#666' }}></i>
+                              </div>
+                              {/* <div className="rating-summary">{rating.summary}</div> */}
+                            </li>
+                          );
+                        })
+                      }
+                    </ul>
+                  </div>
+                );
+              })
+            }
+          </Tabs>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const detail = this.state.detailContent;
     return (
       <div className="movie-detail">
-        { this.showMovieTitle() }
+        {this.showMovieTitle(detail)}
         <Header
           titleItem={this.titleItem}
           bgColor={'#30566B'}
           {...this.props} />
         {this.contentRender(detail)}
+        {this.commentTabRender(detail)}
       </div>
     );
   }

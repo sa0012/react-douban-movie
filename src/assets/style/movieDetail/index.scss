@@ -352,42 +352,7 @@
       padding-bottom: 20px;
     }
 
-    .rating-item {
-      @include border-bottom-1px(#ccc);
-      margin: 15px 0;
-      padding: 15px 0;
-      .rating-title {
-        color: #fff;
-        font-size: 14px;
-        font-weight: bold;
-        padding-bottom: 15px;
-      }
 
-      .rating-user-wrap {
-        display: flex;
-        align-items: center;
-        color: #fff;
-
-        .rat-user-avatar {
-          border-radius: 1000px;
-        }
-
-        .rat-user-avatar {
-          margin-right: 10px;
-        }
-
-        .avatar-name {
-          display: inline-block;
-          margin-bottom: 5px;
-        }
-
-        .rating-icon-edit {
-          flex: 1;
-          text-align: right;
-        }
-      }
-
-    }
     .rating-summary {
       color: #fff;
       padding-top: 15px;
@@ -401,7 +366,8 @@
     color: green;
     text-align: center;
 
-    .all-rating-text, .all-rating-right {
+    .all-rating-text,
+    .all-rating-right {
       display: inline-block;
       vertical-align: middle;
     }
@@ -410,5 +376,106 @@
       text-align: right;
       font-size: 24px;
     }
+  }
+}
+
+.rating-item {
+  @include border-bottom-1px(#ccc);
+  margin: 15px 0;
+  padding: 15px 0;
+
+  .rating-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 15px;
+  }
+
+  .rating-user-wrap {
+    display: flex;
+    align-items: center;
+    color: #fff;
+
+  }
+
+}
+
+.rat-user-avatar {
+  border-radius: 1000px;
+}
+
+.rat-user-avatar {
+  margin-right: 10px;
+}
+
+.avatar-name {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.rating-icon-edit {
+  flex: 1;
+  text-align: right;
+}
+
+.movie-title-center {
+  position: fixed;
+  z-index: 4444;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  left: 50px;
+  color: #fff;
+  background-color: rgb(48, 86, 107);
+  width: 100%;
+  animation: slide 0.5s ease-out;
+
+  .title-avatar {
+    width: 24px;
+    margin-right: 10px;
+    border-radius: 3px;
+  }
+
+  .title-mc-title {
+    padding-bottom: 3px;
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+
+  to {
+    opacity: 1;
+    // height: 50px;
+    transform: translateY(0);
+  }
+}
+
+.rating-tabs-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+
+  .comment-tabs-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .tabs-line {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    border-radius: 10px;
+    background-color: #666;
+    z-index: 444;
   }
 }
