@@ -39,14 +39,16 @@ class MovieDetial extends Component {
       isShowTop: false,
       commentStart: 0,
       commnetDistance: 0,
-      clientHeight: Node
+      clientHeight: Node,
+      isShowRatingTabs: false,
+      isFirstClickTabsChange: true
     }
   }
 
   componentDidMount() {
     this.setState({
-      clientHeight: (document.body.clientHeight || document.documentElement.clientHeight) - 60
-    })
+      clientHeight: (document.body.clientHeight || document.documentElement.clientHeight)
+    });
     window.addEventListener('scroll', this.handleScroll);
     const { pathname } = this.props.history.location;
     let detailId = pathname.split('/')[2];
@@ -61,6 +63,24 @@ class MovieDetial extends Component {
   }
   handleScroll = (e) => {
     let top = document.documentElement.scrollTop || document.body.scrollTop;
+    let clientHeight = document.querySelector('.movie-contant').offsetHeight;
+    const wScrollY = window.scrollY; // 当前滚动条位置  
+    const wInnerH = window.innerHeight; // 设备窗口的高度（不会变）  
+    const bScrollH = document.body.scrollHeight; // 滚动条总高度   
+
+    if (top + wInnerH >= clientHeight) {
+      document.querySelector('.rating-tabs-wrap').style.position = 'initial';
+      document.querySelector('.comment-tabs-wrap').style.position = 'relative';
+      this.setState({
+        isShowRatingTabs: true
+      })
+    } else {
+      document.querySelector('.rating-tabs-wrap').style.position = 'fixed';
+      document.querySelector('.comment-tabs-wrap').style.position = 'position';
+      this.setState({
+        isShowRatingTabs: false
+      })
+    }
     if (top > 50) {
       this.setState({
         isShowTop: true
@@ -108,7 +128,7 @@ class MovieDetial extends Component {
 
   contentRender = (detail) => {
     return (
-      <div style={{ paddingTop: '60px' }}>
+      <div style={{ paddingTop: '60px' }} className="movie-contant">
         <div className="movie-mes">
           <img className="movie-img" src={$.replaceUrl(this.state.bannerImg)} alt="" />
           <div className="movie-sum">
@@ -433,10 +453,23 @@ class MovieDetial extends Component {
 
   handleChangeTabs = (tab, index) => {
     console.log(tab, index)
-    document.querySelector('.rating-tabs-wrap').style.top = `51px`;
+    // this.setState({
+    //   isShowRatingTabs: false
+    // })
+    // if (this.state.isFirstClickTabsChange) {
+    //   this.setState({
+    //     isFirstClickTabsChange: false
+    //   })
+    //   console.log('this is a first click')
+    //   setTimeout(() => {
+    //     document.querySelector('.rating-tabs-wrap').style.transform = 'translateY(-600px)';
+    //   }, 300)
+    // }
+    
   }
 
   commentTouchStart = (e) => {
+    if (this.state.isShowRatingTabs) return false;
     e.persist()
     let start = e.changedTouches[0].clientY
     this.setState({
@@ -446,8 +479,9 @@ class MovieDetial extends Component {
   }
 
   commentTouchMove = (e) => {
+    if (this.state.isShowRatingTabs) return false;
     let currentDisY = e.changedTouches[0].clientY;
-    if (currentDisY >= 51 && currentDisY <= this.state.clientHeight - 2) {
+    if (currentDisY >= 51 && currentDisY <= this.state.clientHeight) {
       document.querySelector('.rating-tabs-wrap').style.top = `${currentDisY}px`;
       // this.setState({
       //   commnetDistance: currentDisY
@@ -456,13 +490,18 @@ class MovieDetial extends Component {
   }
 
   commentTouchEnd = (e) => {
+    if (this.state.isShowRatingTabs) return false;
     const halfHeight = this.state.clientHeight / 2;
     let currentDisY = e.changedTouches[0].clientY;
     document.body.style.overflow = document.documentElement.style.overflow = 'initial';
     if (currentDisY < halfHeight) {
       document.querySelector('.rating-tabs-wrap').style.top = `51px`;
     } else {
-      document.querySelector('.rating-tabs-wrap').style.top = '603px';
+      console.log(this.state.clientHeight - 51, 'client')
+      document.querySelector('.rating-tabs-wrap').style.top = `${ this.state.clientHeight - 51}px`;
+      // this.setState({
+      //   isFirstClickTabsChange: true
+      // })
     }
   }
 
@@ -512,7 +551,7 @@ class MovieDetial extends Component {
                                 </div>
                                 <i className="iconfont icon-collect rating-icon-edit" style={{ color: '#666' }}></i>
                               </div>
-                              {/* <div className="rating-summary">{rating.summary}</div> */}
+                              <div className="rating-summary">{rating.summary}</div>
                             </li>
                           );
                         })

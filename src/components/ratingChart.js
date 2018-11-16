@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import '../assets/style/star/rating.scss';
 
@@ -27,14 +27,12 @@ class RatingChart extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      try {
-        const preWidth = document.querySelector('.group').clientWidth || 0;
-        this.setState({
-          preWidth: preWidth
-        });
-      } catch (e) { }
-    }, 1000)
+    try {
+      const preWidth = document.querySelector('.star-pre').offsetWidth || this.payMoneyRef.offsetWidth;
+      this.setState({
+        preWidth: preWidth
+      });
+    } catch (e) { }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -113,7 +111,7 @@ class RatingChart extends Component {
             }
           </div>
         </div>
-        <div className="star-pre" ref="group">
+        <div className="star-pre" ref={(ref) => this.payMoneyRef = ref}>
           {
             everyScore.map((score, index) => {
               return (
