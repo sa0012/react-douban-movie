@@ -277,6 +277,7 @@ class MovieDetial extends Component {
                       'casts-item': true,
                       'is-right': index !== allCasts.length - 1
                     })}
+                    onClick={ () => this.toCelebrityPage(cast.id) }
                     key={index}
                   >
                     <img className="casts-avatar" src={cast.castsAvatar} alt="" />
@@ -291,6 +292,10 @@ class MovieDetial extends Component {
         </div>
       </div>
     );
+  }
+
+  toCelebrityPage = (id) => {
+    this.props.history.push(`/celebrity/${ id }`)
   }
 
   // 花絮
@@ -341,48 +346,59 @@ class MovieDetial extends Component {
 
   // 短评
   shortRatingRender = (detail) => {
-    const popularReviews = detail.popular_reviews || []
     return (
       <div className="short-rating">
         <div className="short-rating-inner">
           <div className="person-top short-top">
             <h3 className="person-title">短评</h3>
-            <div className="person-text">
+            <div className="person-text" onClick={() => this.toCommentPage('comments')}>
               <span className="text-all" style={{ color: '#666' }}>全部{detail.comments_count}</span>
               <i className="iconfont icon-keyboard_arrow_right person-back" style={{ color: '#666' }}></i>
             </div>
           </div>
-
-          <ul className="rating-content">
-            {
-              popularReviews.length > 0 && popularReviews.map((rating, index) => {
-                return (
-                  <li className="rating-item" key={index}>
-                    <div className="rating-title">{rating.title}</div>
-                    <div className="rating-user-wrap">
-                      <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
-                      <div className="rat-user-name">
-                        <span className="avatar-name">{rating.author.name}</span>
-                        <Star size={24}
-                          score={(rating.rating.value - 0) * 2}
-                          showScore={false}
-                          needNullStar={true} />
-                      </div>
-                      <i className="iconfont icon-collect rating-icon-edit"></i>
-                    </div>
-                    <div className="rating-summary">{rating.summary}</div>
-                  </li>
-                );
-              })
-            }
-          </ul>
-          <div className="all-rating">
-            <span className="all-rating-text">查看全部短评</span>
-            <i className="iconfont icon-keyboard_arrow_right all-rating-right"></i>
-          </div>
+          {this.ratingList(detail)}
         </div>
       </div>
     );
+  }
+
+  ratingList = (detail) => {
+    const popularReviews = detail.popular_reviews || []
+    return (
+      <div className="rating-list">
+        <ul className="rating-content">
+          {
+            popularReviews.length > 0 && popularReviews.map((rating, index) => {
+              return (
+                <li className="rating-item" key={index}>
+                  <div className="rating-title">{rating.title}</div>
+                  <div className="rating-user-wrap">
+                    <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
+                    <div className="rat-user-name">
+                      <span className="avatar-name">{rating.author.name}</span>
+                      <Star size={24}
+                        score={(rating.rating.value - 0) * 2}
+                        showScore={false}
+                        needNullStar={true} />
+                    </div>
+                    <i className="iconfont icon-collect rating-icon-edit"></i>
+                  </div>
+                  <div className="rating-summary">{rating.summary}</div>
+                </li>
+              );
+            })
+          }
+        </ul>
+        <div className="all-rating">
+          <span className="all-rating-text" onClick={() => this.toCommentPage('comments')}>查看全部短评</span>
+          <i className="iconfont icon-keyboard_arrow_right all-rating-right"></i>
+        </div>
+      </div>
+    );
+  }
+
+  toCommentPage = (type) => {
+    this.props.history.push(`/movie/${this.state.detailId}/${type}`)
   }
 
   scoreRender = (detail) => {
@@ -440,7 +456,7 @@ class MovieDetial extends Component {
         <div className="movie-title-center">
           <img src={$.replaceUrl(this.state.bannerImg)} className="title-avatar" alt="" />
           <div className="title-movie-content">
-            <div className="title-mc-title">{ detail.title }</div>
+            <div className="title-mc-title">{detail.title}</div>
             <Star size={24}
               score={this.state.rating.average}
               showScore={true}
@@ -465,7 +481,7 @@ class MovieDetial extends Component {
     //     document.querySelector('.rating-tabs-wrap').style.transform = 'translateY(-600px)';
     //   }, 300)
     // }
-    
+
   }
 
   commentTouchStart = (e) => {
@@ -496,12 +512,14 @@ class MovieDetial extends Component {
     document.body.style.overflow = document.documentElement.style.overflow = 'initial';
     if (currentDisY < halfHeight) {
       document.querySelector('.rating-tabs-wrap').style.top = `51px`;
+      this.setState({
+        isShowRatingTabs: true
+      })
     } else {
-      console.log(this.state.clientHeight - 51, 'client')
-      document.querySelector('.rating-tabs-wrap').style.top = `${ this.state.clientHeight - 51}px`;
-      // this.setState({
-      //   isFirstClickTabsChange: true
-      // })
+      document.querySelector('.rating-tabs-wrap').style.top = `${this.state.clientHeight - 51}px`;
+      this.setState({
+        isShowRatingTabs: false
+      })
     }
   }
 
@@ -510,7 +528,6 @@ class MovieDetial extends Component {
       { title: '影评' },
       { title: '短评' },
     ];
-    const popularReviews = detail.popular_reviews || []
     return (
       <div className="rating-tabs-wrap">
         <div
@@ -534,34 +551,46 @@ class MovieDetial extends Component {
               (tabs || []).map((item, index) => {
                 return (
                   <div key={index}>
-                    <ul className="rating-content" style={{ backgroundColor: '#fff', padding: '15px', color: '#666' }}>
-                      {
-                        popularReviews.length > 0 && popularReviews.map((rating, index) => {
-                          return (
-                            <li className="rating-item" key={index} style={{ margin: 0 }}>
-                              <div className="rating-title" style={{ color: '#666' }}>{rating.title}</div>
-                              <div className="rating-user-wrap" style={{ paddingBottom: '10px' }}>
-                                <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
-                                <div className="rat-user-name">
-                                  <span className="avatar-name" style={{ color: '#666' }}>{rating.author.name}</span>
-                                  <Star size={24}
-                                    score={(rating.rating.value - 0) * 2}
-                                    showScore={false}
-                                    needNullStar={(rating.rating.value - 0) ? true : false} />
-                                </div>
-                                <i className="iconfont icon-collect rating-icon-edit" style={{ color: '#666' }}></i>
-                              </div>
-                              <div className="rating-summary">{rating.summary}</div>
-                            </li>
-                          );
-                        })
-                      }
-                    </ul>
+                    { this.firstTabs(index === 0 ? (detail.popular_reviews || []) : (detail.popular_comments || []), index) }
                   </div>
                 );
               })
             }
           </Tabs>
+        </div>
+      </div>
+    );
+  }
+
+  firstTabs = (popularReviews, tabIndex) => {
+    return (
+      <div>
+        <ul className="rating-content" style={{ backgroundColor: '#fff', padding: '15px', color: '#666' }}>
+          {
+            popularReviews.length > 0 && popularReviews.map((rating, index) => {
+              return (
+                <li className="rating-item" key={index} style={{ margin: 0 }}>
+                  <div className="rating-title" style={{ color: '#666' }}>{rating.title}</div>
+                  <div className="rating-user-wrap" style={{ paddingBottom: '10px' }}>
+                    <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
+                    <div className="rat-user-name">
+                      <span className="avatar-name" style={{ color: '#666' }}>{rating.author.name}</span>
+                      <Star size={24}
+                        score={(rating.rating.value - 0) * 2}
+                        showScore={false}
+                        needNullStar={(rating.rating.value - 0) ? true : false} />
+                    </div>
+                    <i className="iconfont icon-collect rating-icon-edit" style={{ color: '#666' }}></i>
+                  </div>
+                  <div className="rating-summary">{ tabIndex === 0 ? rating.summary : rating.content}</div>
+                </li>
+              );
+            })
+          }
+        </ul>
+        <div className="all-rating">
+          <span className="all-rating-text" onClick={() => this.toCommentPage(tabIndex === 0 ? 'comments' : 'reviews')}>查看全部评论</span>
+          <i className="iconfont icon-keyboard_arrow_right all-rating-right"></i>
         </div>
       </div>
     );

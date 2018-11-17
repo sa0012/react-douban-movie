@@ -113,7 +113,7 @@ class RatingChart extends Component {
         </div>
         <div className="star-pre" ref={(ref) => this.payMoneyRef = ref}>
           {
-            everyScore.map((score, index) => {
+            everyScore.reverse().map((score, index) => {
               return (
                 <div className="group" key={index}>
                   <div className="on-light" style={{ width: score === 0 ? score : preWidth * score }}></div>
