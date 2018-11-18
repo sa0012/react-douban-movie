@@ -73,19 +73,24 @@ export default class RouteConfig extends Component {
                     loader: () => import('../pages/tagList')
                   })
                 } />
-                <Route exact path="/movie/:id/comments" component={
+                <Route exact path="/movie/:id/:ratingType" component={
                   AsyncLoadable({
                     loader: () => import('../pages/comment/shortComment')
                   })
                 } />
-                <Route exact path="/movie/:id/reviews" component={
+                {/* <Route exact path="/movie/:id/reviews" component={
                   AsyncLoadable({
                     loader: () => import('../pages/comment/movieComment')
                   })
-                } />
+                } /> */}
                 <Route exact path="/celebrity/:id" component={
                   AsyncLoadable({
                     loader: () => import('../pages/celebrity')
+                  })
+                } />
+                 <Route exact path="/celebrity/:id/works" component={
+                  AsyncLoadable({
+                    loader: () => import('../pages/celebrity/allCelebrity')
                   })
                 } />
                 <Redirect to="/" />

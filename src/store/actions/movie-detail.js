@@ -9,10 +9,10 @@ export const getMovieReview = createAction(GETMOVIEREVIEW, (id, callback = Funct
   return { id, callback };
 });
 
-export const getAllReviews = createAction(GETALLREVIEWS, (id, start = 0, count = 10, callback = Function) => {
-  return { id, start, count, callback };
+export const getAllReviews = createAction(GETALLREVIEWS, (id = '', ratingType = '', start = 0, count = 10, callback = Function) => {
+  return { id, ratingType, start, count, callback };
 });
 
-export const getAllComments = createAction(GETALLCOMMENTS, (id, start = 0, count = 10, callback = Function) => {
-  return { id, start, count, callback };
+export const getAllComments = createAction(GETALLCOMMENTS, (id = '', ratingType = '', start = 0, count = 10, callback = Function) => {
+  return { id, ratingType, start, count, callback };
 });

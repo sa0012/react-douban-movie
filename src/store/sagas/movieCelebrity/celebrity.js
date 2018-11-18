@@ -34,7 +34,7 @@ function* getCelebrityAsync(action) {
 }
 
 function* getCelebrityWorksAsync(action) {
-  const url = `/v2/movie/celebrity/${ action.payload.id }`;
+  const url = `/v2/movie/celebrity/${ action.payload.id }/works`;
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count

@@ -71,12 +71,14 @@ class MovieDetial extends Component {
     if (top + wInnerH >= clientHeight) {
       document.querySelector('.rating-tabs-wrap').style.position = 'initial';
       document.querySelector('.comment-tabs-wrap').style.position = 'relative';
+      // document.querySelector('.rating-tabs-wrap').style.top = '51px';
       this.setState({
         isShowRatingTabs: true
       })
     } else {
       document.querySelector('.rating-tabs-wrap').style.position = 'fixed';
       document.querySelector('.comment-tabs-wrap').style.position = 'position';
+      // document.querySelector('.rating-tabs-wrap').style.bottom = 0;
       this.setState({
         isShowRatingTabs: false
       })
@@ -277,7 +279,7 @@ class MovieDetial extends Component {
                       'casts-item': true,
                       'is-right': index !== allCasts.length - 1
                     })}
-                    onClick={ () => this.toCelebrityPage(cast.id) }
+                    onClick={() => this.toCelebrityPage(cast.id)}
                     key={index}
                   >
                     <img className="casts-avatar" src={cast.castsAvatar} alt="" />
@@ -295,7 +297,7 @@ class MovieDetial extends Component {
   }
 
   toCelebrityPage = (id) => {
-    this.props.history.push(`/celebrity/${ id }`)
+    this.props.history.push(`/celebrity/${id}`)
   }
 
   // 花絮
@@ -350,7 +352,7 @@ class MovieDetial extends Component {
       <div className="short-rating">
         <div className="short-rating-inner">
           <div className="person-top short-top">
-            <h3 className="person-title">短评</h3>
+            <h3 className="person-title">影评</h3>
             <div className="person-text" onClick={() => this.toCommentPage('comments')}>
               <span className="text-all" style={{ color: '#666' }}>全部{detail.comments_count}</span>
               <i className="iconfont icon-keyboard_arrow_right person-back" style={{ color: '#666' }}></i>
@@ -533,9 +535,9 @@ class MovieDetial extends Component {
         <div
           className="comment-tabs-wrap"
           ref="comment"
-          onTouchStart={this.commentTouchStart}
-          onTouchMove={this.commentTouchMove}
-          onTouchEnd={this.commentTouchEnd}
+          // onTouchStart={this.commentTouchStart}
+          // onTouchMove={this.commentTouchMove}
+          // onTouchEnd={this.commentTouchEnd}
         >
           <div className="tabs-line"></div>
           <Tabs
@@ -551,7 +553,7 @@ class MovieDetial extends Component {
               (tabs || []).map((item, index) => {
                 return (
                   <div key={index}>
-                    { this.firstTabs(index === 0 ? (detail.popular_reviews || []) : (detail.popular_comments || []), index) }
+                    {this.firstTabs(index === 0 ? (detail.popular_reviews || []) : (detail.popular_comments || []), index)}
                   </div>
                 );
               })
@@ -570,7 +572,11 @@ class MovieDetial extends Component {
             popularReviews.length > 0 && popularReviews.map((rating, index) => {
               return (
                 <li className="rating-item" key={index} style={{ margin: 0 }}>
-                  <div className="rating-title" style={{ color: '#666' }}>{rating.title}</div>
+                  {
+                    tabIndex === 0 && (
+                      <div className="rating-title" style={{ color: '#666' }}>{rating.title}</div>
+                    )
+                  }
                   <div className="rating-user-wrap" style={{ paddingBottom: '10px' }}>
                     <img className="rat-user-avatar" src={$.replaceUrl(rating.author.avatar)} alt="" />
                     <div className="rat-user-name">
@@ -580,20 +586,38 @@ class MovieDetial extends Component {
                         showScore={false}
                         needNullStar={(rating.rating.value - 0) ? true : false} />
                     </div>
-                    <i className="iconfont icon-collect rating-icon-edit" style={{ color: '#666' }}></i>
+                    {
+                      tabIndex === 0 ? (
+                        <i className="iconfont icon-collect rating-icon-edit" style={{ color: '#666' }}></i>
+                      ) : (
+                          <i className="iconfont icon-thumb_up rating-icon-edit" style={{ color: '#666' }}></i>
+                        )
+                    }
+                    {
+                      tabIndex === 1 && (<span style={{ color: '#666' }}>{rating.useful_count}</span>)
+                    }
                   </div>
-                  <div className="rating-summary">{ tabIndex === 0 ? rating.summary : rating.content}</div>
+                  <div className="rating-summary">{tabIndex === 0 ? rating.summary : rating.content}</div>
+                  {
+                    tabIndex === 1 && (
+                      <div className="rating-date" style={{ marginTop: '10px' }}>{rating.created_at}</div>
+                    )
+                  }
                 </li>
               );
             })
           }
         </ul>
         <div className="all-rating">
-          <span className="all-rating-text" onClick={() => this.toCommentPage(tabIndex === 0 ? 'comments' : 'reviews')}>查看全部评论</span>
+          <span className="all-rating-text" onClick={() => this.toCommentPage(tabIndex === 0 ? 'reviews' : 'comments')}>查看全部评论</span>
           <i className="iconfont icon-keyboard_arrow_right all-rating-right"></i>
         </div>
       </div>
     );
+  }
+
+  isLike = () => {
+
   }
 
   render() {

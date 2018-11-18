@@ -35,7 +35,7 @@ function* getMovieReviewAsync(action) {
 }
 
 function* getAllReviewsAsync(action) {
-  const url = `/v2/movie/subject/${ action.payload.id }/reviews`;
+  const url = `/v2/movie/subject/${ action.payload.id }/${ action.payload.ratingType }`;
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count
@@ -52,7 +52,7 @@ function* getAllReviewsAsync(action) {
 }
 
 function* getAllCommentsAsync(action) {
-  const url = `/v2/movie/subject/${ action.payload.id }/comments`;
+  const url = `/v2/movie/subject/${ action.payload.id }/${ action.payload.ratingType }`;
   const data = Object.assign({}, commonParams, {
     start: action.payload.start,
     count: action.payload.count
