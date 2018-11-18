@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { getMovieDetail, getMovieReview, getAllReviews, getAllComments } from '../../store/actions/movie-detail';
+import { addWishMovie, lessWishMovie, addSeenMovie, lessSeenMovie } from '../../store/actions/collect';
 import { bindActionCreators } from 'redux';
 import { DefaultPlayer as Video } from 'react-html5video';
 import 'react-html5video/dist/styles.css';
@@ -15,16 +16,25 @@ import Header from '../../components/Header';
 import Star from '../../components/star';
 import RatingChart from '../../components/ratingChart';
 
+
 function mapDispatchToProps(dispatch) {
   return {
     getMovieDetail: bindActionCreators(getMovieDetail, dispatch),
     getMovieReview: bindActionCreators(getMovieReview, dispatch),
     getAllReviews: bindActionCreators(getAllReviews, dispatch),
     getAllComments: bindActionCreators(getAllComments, dispatch),
+    addWishMovie: bindActionCreators(addWishMovie, dispatch),
+    lessWishMovie: bindActionCreators(lessWishMovie, dispatch),
+    addSeenMovie: bindActionCreators(addSeenMovie, dispatch),
+    lessSeenMovie: bindActionCreators(lessSeenMovie, dispatch),
   }
 }
 
 @connect(state => ({
+  addWishMovieReducer: state.addWishMovieReducer,
+  lessWishMovieReducer: state.lessWishMovieReducer,
+  addSeenMovieReducer: state.addSeenMovieReducer,
+  lessSeenMovieReducer: state.lessSeenMovieReducer,
 }), mapDispatchToProps)
 class MovieDetial extends Component {
   constructor(props) {
@@ -41,7 +51,9 @@ class MovieDetial extends Component {
       commnetDistance: 0,
       clientHeight: Node,
       isShowRatingTabs: false,
-      isFirstClickTabsChange: true
+      isFirstClickTabsChange: true,
+      isCollectWish: false,
+      isCollectSeen: false
     }
   }
 
@@ -173,10 +185,10 @@ class MovieDetial extends Component {
 
             <div className="sum-btn">
               <div className="btn-left-wrap">
-                <div className="btn-inner">想看</div>
+                <div className="btn-inner" onClick={() => this.collectWishMovie('wish')}>想看</div>
               </div>
               <div className="btn-right-wrap">
-                <div className="btn-inner">看过</div>
+                <div className="btn-inner" onClick={() => this.collectWishMovie('seen')}>看过</div>
               </div>
             </div>
           </div>
@@ -190,6 +202,32 @@ class MovieDetial extends Component {
         {this.shortRatingRender(detail)}
       </div>
     );
+  }
+
+  collectWishMovie = async (type) => {
+    if (type === 'wish') {
+      await new Promise((resolve, reject) => {
+        resolve();
+        this.setState({
+          isCollectWish: !this.state.isCollectWish
+        })
+      });
+
+      await new Promise((resolve, reject) => {
+        resolve();
+        if (this.state.isCollectWish) {
+          this.props.addWishMovie(this.state.detailContent);
+        } else {
+          this.props.lessWishMovie(this.state.detailContent.id);
+        }
+      })
+    }
+    if (type === 'seen') {
+      console.log(this.props.addWishMovieReducer, 'state')
+      this.setState({
+        isCollectSeen: !this.state.isCollectSeen
+      })
+    }
   }
 
   wishWatch = () => {
@@ -535,9 +573,9 @@ class MovieDetial extends Component {
         <div
           className="comment-tabs-wrap"
           ref="comment"
-          // onTouchStart={this.commentTouchStart}
-          // onTouchMove={this.commentTouchMove}
-          // onTouchEnd={this.commentTouchEnd}
+        // onTouchStart={this.commentTouchStart}
+        // onTouchMove={this.commentTouchMove}
+        // onTouchEnd={this.commentTouchEnd}
         >
           <div className="tabs-line"></div>
           <Tabs

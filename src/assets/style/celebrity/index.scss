@@ -1,4 +1,111 @@
+@import '../mixin.scss';
 .all-celebrity {
   padding: 0 15px;
   padding-top: 55px;
+
+  .celebrity-avatar-wrap {
+    display: flex;
+    align-items: center;
+
+    .caw-avatar {
+      width: 130px;
+      flex: 0 0 130px;
+      border-radius: 5px;
+      box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    .caw-userinfo {
+      flex: 1;
+      padding-left: 15px;
+      color: #666;
+
+      .caw-item {
+        padding-bottom: 5px;
+      }
+    }
+
+    .caw-collection-btn {
+      width: 100px;
+      height: 40px;
+      line-height: 40px;
+      background: green;
+      text-align: center;
+      color: #fff;
+      border-radius: 5px;
+
+      .caw-collect-icon,
+      .caw-collect-text {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .celebrity-user-info {
+    padding-top: 20px;
+
+    .user-info-title {
+      height: 30px;
+      line-height: 30px;
+      font-size: 16px;
+    }
+
+    .celebrity-summary {
+      line-height: 1.5em;
+    }
+
+  }
+
+  .celebrity-works {
+    padding-top: 20px;
+
+    .celebrity-works-title {
+      height: 30px;
+      line-height: 30px;
+      font-size: 16px;
+    }
+
+    .celebrity-works-list {
+      width: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
+      padding-top: 10px;
+
+      .celebrity-item {
+        width: 90px;
+        vertical-align: top;
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 14px;
+
+        .celebrity-item-img {
+          width: 90px;
+          height: 120px;
+        }
+
+        .celebrity-item-title {
+          color: #333;
+          padding: 8px 0 5px 0;
+          @include no-wrap;
+        }
+      }
+    }
+  }
+
+  .all-rating {
+    margin-top: 15px;
+    text-align: left;
+
+    .all-rating-text, .all-rating-right {
+      display: inline-block;
+      vertical-align: middle;
+      color: green;
+    }
+
+    .all-rating-right {
+      font-size: 18px;
+    }
+  }
 }

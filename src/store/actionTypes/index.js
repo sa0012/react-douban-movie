@@ -22,3 +22,11 @@ export const GETALLCOMMENTS = 'getAllComments';
 // celebrity
 export const GETCELEBRITY = 'getCelebrity';
 export const GETCELEBRITYWORKS = 'getCelebrityWorks';
+
+// 想看、看过、影人
+export const ADDWISHMOVIE = 'addWishMovie';
+export const LESSWISHMOVIE = 'lessWishMovie';
+export const ADDSEENMOVIE = 'addSeenMovie';
+export const LESSSEENMOVIE = 'lessSeenMovie';
+export const ADDFILMMARKER = 'addFilmMarker';
+export const LESSFILMMARKER = 'lessFilmMarker';

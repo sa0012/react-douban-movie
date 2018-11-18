@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions';
 import { MOVIE_SHOW, GETMOVIE, GETCOMINGMOVIE, ALLMOVIELIST } from '../actionTypes';
 
 export const movie_show = createAction(MOVIE_SHOW, (movieList = {}) => {
+  console.log(movieList, 'movie_show')
   return { movieList }
 });
 

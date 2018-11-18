@@ -51,13 +51,32 @@ class Celebrity extends Component {
 			<div className="celebrity-avatar-wrap">
 				<img src={this.state.avatar} alt="" className="caw-avatar" />
 				<div className="caw-userinfo">
-					<div className="caw-user-cname">{detail.name}</div>
-					<div className="caw-user-ename">{detail.name_en}</div>
-					<div className="caw-user-ename">{detail.born_place}</div>
-					<div className="caw-user-ename">{detail.constellation}</div>
-					<div className="caw-user-ename">{detail.birthday}</div>
-					<div className="caw-user-ename">{detail.gender}</div>
-					<div>
+					<div className="caw-user-cname caw-item">
+						<span>中文名：</span>
+						<span>{detail.name}</span>
+					</div>
+					<div className="caw-user-ename caw-item">
+						<span>英文名：</span>
+						<span>{detail.name_en}</span>
+					</div>
+					<div className="caw-user-ename caw-item">
+						<span>性别：</span>
+						<span>{detail.gender}</span>
+					</div>
+					<div className="caw-user-ename caw-item">
+						<span>生日：</span>
+						<span>{detail.birthday}</span>
+					</div>
+					<div className="caw-user-ename caw-item">
+						<span>星座：</span>
+						<span>{detail.constellation}</span>
+					</div>
+					<div className="caw-user-ename caw-item">
+						<span>出生地：</span>
+						<span>{detail.born_place}</span>
+					</div>
+					<div className="caw-item">
+						<span>职业：</span>
 						{
 							detail.professions && detail.professions.length > 0 && detail.professions.map((professions, index) => {
 								return professions && (
@@ -68,6 +87,10 @@ class Celebrity extends Component {
 					</div>
 					<div className="caw-user-attention"></div>
 					<div className="caw-user-attbtn"></div>
+					<div className="caw-collection-btn caw-item">
+						<i className="iconfont icon-collect caw-collect-icon"></i>
+						<span className="caw-collect-text">收藏影人</span>
+					</div>
 				</div>
 			</div>
 		);
