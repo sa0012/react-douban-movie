@@ -17,6 +17,9 @@ function mapDispatchToProps(dispatch) {
 
 @connect(state => ({
   count: state.count,
+  wishMovieList: state.wishMovieList,
+  seenMovieList: state.seenMovieList,
+  filmMarkerList: state.filmMarkerList,
 }), mapDispatchToProps)
 class Info extends Component {
   constructor(props) {
@@ -24,22 +27,20 @@ class Info extends Component {
     this.state = {}
   }
 
-  // static defaultProps = {
-  //   addWishMovieReducer: {},
-  //   lessWishMovieReducer: {},
-  //   addSeenMovieReducer: {},
-  //   lessSeenMovieReducer: {},
-  // }
+  static defaultProps = {
+    wishMovieList: [],
+    seenMovieList: [],
+    filmMarkerList: [],
+  }
 
-  // static propTypes = {
-  //   addWishMovieReducer: PropTypes.object,
-  //   lessWishMovieReducer: PropTypes.object,
-  //   addSeenMovieReducer: PropTypes.object,
-  //   lessSeenMovieReducer: PropTypes.object,
-  // }
+  static propTypes = {
+    wishMovieList: PropTypes.array,
+    seenMovieList: PropTypes.array,
+    filmMarkerList: PropTypes.array,
+  }
 
   componentDidMount() {
-
+    console.log(this.props.wishMovieList, 'wishmovielist')
   }
 
   TabExample = () => {

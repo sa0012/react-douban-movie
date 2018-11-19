@@ -10,56 +10,48 @@ import {
   LESSFILMMARKER
 } from '../actionTypes';
 
-let defalutState = [];
-const addWishMovieReducer = handleActions({
-  [ADDWISHMOVIE]: (state = defalutState, action) => {
+let wishMovieState = [];
+let seenMovieState = [];
+let filmMarkereState = [];
+const wishMovieList = handleActions({
+  [ADDWISHMOVIE]: (state = wishMovieState, action) => {
     state.push(action.payload.movie);
-    console.log(action.payload.movie, 'action')
     return JSON.parse(JSON.stringify(state));
-  }
-}, defalutState);
-
-const lessWishMovieReducer = handleActions({
-  [LESSWISHMOVIE]: (state = defalutState, action) => {
-    console.log(state, 'state')
+  },
+  [LESSWISHMOVIE]: (state = wishMovieState, action) => {
     const itemIndex = state.findIndex(i => i.id === action.payload.id);
-    console.log(itemIndex, state, 'item')
     return state.filter((item, index) => index !== itemIndex);
   }
-}, defalutState);
+}, wishMovieState);
 
-const addSeenMovieReducer = handleActions({
-  [ADDSEENMOVIE]: (state = defalutState, action) => {
-    state.push(action.movie);
+
+const seenMovieList = handleActions({
+  [ADDSEENMOVIE]: (state = seenMovieState, action) => {
+    state.push(action.payload.movie);
     return JSON.parse(JSON.stringify(state));
+  },
+  [LESSSEENMOVIE]: (state = seenMovieState, action) => {
+    const itemIndex = state.findIndex(i => i.id === action.payload.id);
+    return state.filter((item, index) => index !== itemIndex);
   }
-}, defalutState);
+}, seenMovieState);
 
-const lessSeenMovieReducer = handleActions({
-  [LESSSEENMOVIE]: (state = defalutState, action) => {
-    return Object.assign({}, state, action.movie);
-  }
-}, defalutState);
 
-const addFilmMarkerReducer = handleActions({
-  [ADDFILMMARKER]: (state = defalutState, action) => {
-    state.push(action.movie);
+const filmMarkerList = handleActions({
+  [ADDFILMMARKER]: (state = filmMarkereState, action) => {
+    state.push(action.payload.movie);
     return JSON.parse(JSON.stringify(state));
+  },
+  [LESSFILMMARKER]: (state = filmMarkereState, action) => {
+    const itemIndex = state.findIndex(i => i.id === action.payload.id);
+    return state.filter((item, index) => index !== itemIndex);
   }
-}, defalutState);
+}, filmMarkereState);
 
-const lessFilmMarkerReducer = handleActions({
-  [LESSFILMMARKER]: (state = defalutState, action) => {
-    return Object.assign({}, state, action.movie);
-  }
-}, defalutState);
 
 
 module.exports = {
-  addWishMovieReducer,
-  lessWishMovieReducer,
-  addSeenMovieReducer,
-  lessSeenMovieReducer,
-  addFilmMarkerReducer,
-  lessFilmMarkerReducer,
+  wishMovieList,
+  seenMovieList,
+  filmMarkerList
 }

@@ -31,10 +31,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(state => ({
-  addWishMovieReducer: state.addWishMovieReducer,
-  lessWishMovieReducer: state.lessWishMovieReducer,
-  addSeenMovieReducer: state.addSeenMovieReducer,
-  lessSeenMovieReducer: state.lessSeenMovieReducer,
+  wishMovieList: state.wishMovieList,
 }), mapDispatchToProps)
 class MovieDetial extends Component {
   constructor(props) {
