@@ -26,9 +26,10 @@
       position: relative;
 
       .on-light {
-        background-color: #ff9900;
+        // background-color: #ff9900;
+        background-image: linear-gradient( 135deg, #FEB692 10%, #EA5455 100%);
         height: 15px;
-        border-radius: 5px;
+        border-radius: 3px;
       }
 
       .percentage {

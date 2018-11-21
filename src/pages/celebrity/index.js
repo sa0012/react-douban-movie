@@ -6,6 +6,7 @@ import $ from '../../util';
 import Header from '../../components/Header';
 import Star from '../../components/star';
 import '../../assets/style/celebrity/index.scss';
+import BgColor from '../../config/background';
 
 function mapDispatchToProps(dispatch) {
 	return {
@@ -104,7 +105,7 @@ class Celebrity extends Component {
 					{
 						works.length > 0 && works.map((works, worksIndex) => {
 							return (
-								<li className="celebrity-item" key={ worksIndex }>
+								<li className="celebrity-item" key={ worksIndex } onClick={ () => this.toDetailPage(works.subject.id) }>
 									<img src={ works.subject.images.small } className="celebrity-item-img" alt=""/>
 									<h2 className="celebrity-item-title">{ works.subject.title }</h2>
 									<Star size={24}
@@ -126,7 +127,11 @@ class Celebrity extends Component {
 
 	toWorksPaeg = () => {
 		this.props.history.push(`/celebrity/${ this.state.detailId }/works`)
-	}
+  }
+  
+  toDetailPage = (id) => {
+    this.props.history.push(`/movie/${ id }`)
+  }
 
 	render() {
 		const { celebrity } = this.state;
