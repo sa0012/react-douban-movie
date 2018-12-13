@@ -10,6 +10,7 @@ import {
   connect
 } from 'react-redux';
 import $ from '../../util';
+import { setStore, getStore, removeStore } from '../../util/mUtils';
 import '../../assets/style/searchDetail/index.scss';
 import img1 from '../../assets/images/img1.jpg';
 import img2 from '../../assets/images/img2.jpg';
@@ -56,6 +57,12 @@ class SearchDetail extends Component {
   }
 
   componentDidMount() {
+    try {
+      this.setState({
+        historyList: JSON.parse(getStore('searchHistory')) || []
+      })
+    } catch(e) {}
+    
   }
 
   checkMore = (indexType, data, callback) => {
@@ -84,8 +91,15 @@ class SearchDetail extends Component {
         if (Object.prototype.toString.call(movies) === '[object Array]') {
           let moviesList = this.state[arrType].concat(movies);
           if (indexType === 'queryIndex') {
-            let historyArr = [];
+            let historyArr = this.state.historyList || [];
             historyArr.push(this.state.searchValue);
+            historyArr = Array.from(new Set(historyArr))
+            setStore('searchHistory', historyArr);
+            try {
+              if (historyArr instanceof Array && JSON.parse(getStore('searchHistory')) instanceof Array) {
+                historyArr.push(...JSON.parse(getStore('searchHistory')));
+              }
+            } catch(e) {}
             this.setState({
               historyList: historyArr
             })
@@ -226,7 +240,7 @@ class SearchDetail extends Component {
       <div className="search-history">
         <div className="history-top">
           <div className="history-text">搜索历史</div>
-          <i className="iconfont icon-bin history-bin"></i>
+          <i className="iconfont icon-bin history-bin" onClick={ () => this.clearAllSearchHistory() }></i>
         </div>
         {
           this.searchHistoryList()
@@ -243,7 +257,10 @@ class SearchDetail extends Component {
         {
           historyList && historyList.length > 0 ? historyList.map((item, index) => {
             return (
-              <li className="his-item">{ item }</li>
+              <li className="his-item" key={ index }>
+                <div>{ item }</div>
+                <i className="iconfont icon-bin history-bin" onClick={ () => this.clearSingleSearchHistory(index) }></i>
+              </li>
             );
           }) : (
               <li className="his-default">还没有搜索历史，快去搜索吧 :)</li>
@@ -251,6 +268,26 @@ class SearchDetail extends Component {
         }
       </ul>
     );
+  }
+
+  clearAllSearchHistory = () => {
+    this.setState({
+      historyList: []
+    });
+    removeStore('searchHistory');
+  }
+
+  clearSingleSearchHistory = (index) => {
+    try {
+      let searchHisArr = JSON.parse(getStore('searchHistory')) || [];
+      searchHisArr.splice(index, 1);
+
+      this.setState({
+        historyList: searchHisArr
+      }, res => {
+        setStore('searchHistory', this.state.historyList)
+      });
+    } catch(e) {}
   }
 
   render() {

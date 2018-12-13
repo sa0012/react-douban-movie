@@ -28,7 +28,7 @@ class RatingChart extends Component {
 
   componentDidMount() {
     try {
-      const preWidth = document.querySelector('.star-pre').offsetWidth || this.payMoneyRef.offsetWidth;
+      const preWidth = this.payMoneyRef.clientWidth - 50;
       this.setState({
         preWidth: preWidth
       });

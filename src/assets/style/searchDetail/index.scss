@@ -134,12 +134,17 @@
 }
 
 .his-list {
-  padding: 0 15px;
+  // padding: 0 15px;
   padding-top: 15px;
   .his-default {
     height: 44px;
     line-height: 44px;
     color: #666;
     text-align: center;
+  }
+
+  .his-item {
+    display: flex;
+    margin-bottom: 10px;
   }
 }
