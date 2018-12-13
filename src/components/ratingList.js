@@ -113,8 +113,8 @@ class RatingList extends Component {
                             <span className="avatar-name">{rating.author.name}</span>
                             <Star size={24}
                               score={(rating.rating.value - 0) * 2}
-                              showScore={false}
-                              needNullStar={true} />
+                              showScore={true}
+                              needNullStar={ rating.rating.value ? true : false } />
                           </div>
                           {
                             this.props.ratingType === 'reviews' ? (

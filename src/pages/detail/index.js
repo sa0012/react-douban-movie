@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { DefaultPlayer as Video } from 'react-html5video';
 import 'react-html5video/dist/styles.css';
 import $ from '../../util';
+import { setStore, getStore } from '../../util/mUtils';
 import { Tabs } from 'antd-mobile';
 import '../../assets/style/movieDetail/index.scss';
 import '../../assets/style/movieDetail/tabs.scss';
@@ -49,8 +50,10 @@ class MovieDetial extends Component {
       clientHeight: Node,
       isShowRatingTabs: false,
       isFirstClickTabsChange: true,
-      isCollectWish: false,
-      isCollectSeen: false
+      isCollectWish: {},
+      isCollectSeen: {},
+      wishKey: '',
+      seenKey: ''
     }
   }
 
@@ -63,7 +66,22 @@ class MovieDetial extends Component {
     let detailId = pathname.split('/')[2];
     this.setState({
       detailId: detailId
+    }, res => {
+      try {
+        let wishKey = `wish${this.state.detailId}`;
+        let seenKey = `seen${this.state.detailId}`;
+        console.log(wishKey, 'wishkey')
+        this.setState({
+          isCollectWish: Object.assign({ [wishKey]: false }, JSON.parse(getStore('wishWatchMovie')) || {}),
+          isCollectSeen: Object.assign({ [seenKey]: false }, JSON.parse(getStore('seenWatchMovie')) || {}),
+          wishKey: wishKey,
+          seenKey: seenKey
+        }, res => {
+          console.log(this.state.isCollectWish, 'slslslsl')
+        })
+      } catch(e) {}
     });
+
     this.searchMovieDetail(detailId);
   }
 
@@ -182,10 +200,16 @@ class MovieDetial extends Component {
 
             <div className="sum-btn">
               <div className="btn-left-wrap">
-                <div className="btn-inner" onClick={() => this.collectWishMovie('wish')}>想看</div>
+                <div 
+                  className="btn-inner" 
+                  style={ this.state.isCollectWish[this.state.wishKey] ? { backgroundColor: '#607D8B', color: '#fff' } : { backgroundColor: '#fff', color: '#999' } } 
+                  onClick={() => this.collectWishMovie('wish')}>{ this.state.isCollectWish[this.state.wishKey] ? '已看过' : '想看' }</div>
               </div>
               <div className="btn-right-wrap">
-                <div className="btn-inner" onClick={() => this.collectWishMovie('seen')}>看过</div>
+                <div 
+                className="btn-inner" 
+                style={ this.state.isCollectSeen[this.state.seenKey] ? { backgroundColor: '#607D8B', color: '#fff' } : { backgroundColor: '#fff', color: '#999' } } 
+                onClick={() => this.collectWishMovie('seen')}>{ this.state.isCollectSeen[this.state.seenKey] ? '已想看' : '看过' }</div>
               </div>
             </div>
           </div>
@@ -202,29 +226,37 @@ class MovieDetial extends Component {
   }
 
   collectWishMovie = async (type) => {
-    if (type === 'wish') {
-      await new Promise((resolve, reject) => {
-        resolve();
-        this.setState({
-          isCollectWish: !this.state.isCollectWish
-        })
-      });
-
-      await new Promise((resolve, reject) => {
-        resolve();
-        if (this.state.isCollectWish) {
-          this.props.addWishMovie(this.state.detailContent);
-        } else {
-          this.props.lessWishMovie(this.state.detailContent.id);
+    await new Promise((resolve, reject) => {
+      resolve();
+      let wishWatchObj = this.state.isCollectWish || {};
+      let seenWatchObj = this.state.isCollectSeen || {};
+      if (type === 'wish') {
+        wishWatchObj[this.state.wishKey] = !wishWatchObj[this.state.wishKey]
+      } else if (type === 'seen') {
+        seenWatchObj[this.state.seenKey] = !seenWatchObj[this.state.seenKey]
+      }
+      
+      this.setState({
+        isCollectWish: Object.assign({}, wishWatchObj),
+        isCollectSeen: Object.assign({}, seenWatchObj)
+      }, res => {
+        console.log(this.state.isCollectWish, 'wish')
+        if (type === 'wish') {
+          setStore('wishWatchMovie', this.state.isCollectWish || {})
+        } else if (type === 'seen') {
+          setStore('seenWatchMovie', this.state.isCollectSeen || {})
         }
       })
-    }
-    if (type === 'seen') {
-      console.log(this.props.addWishMovieReducer, 'state')
-      this.setState({
-        isCollectSeen: !this.state.isCollectSeen
-      })
-    }
+    });
+
+    await new Promise((resolve, reject) => {
+      resolve();
+      if (this.state.isCollectWish) {
+        this.props.addWishMovie(this.state.detailContent);
+      } else {
+        this.props.lessWishMovie(this.state.detailContent.id);
+      }
+    })
   }
 
   wishWatch = () => {
