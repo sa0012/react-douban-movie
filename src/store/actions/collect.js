@@ -11,6 +11,7 @@ export const lessWishMovie = createAction(LESSWISHMOVIE, (id) => {
 });
 
 export const addSeenMovie = createAction(ADDSEENMOVIE, (movie = {}) => {
+  console.log(movie, 'actions')
   return { movie }
 });
 
