@@ -272,6 +272,7 @@ class Top250 extends Component {
                   cardList={this.state.allMoviesList}
                   loadMoreMovie={this.loadMoreMovie}
                   isRefresh={true}
+                  pTop={ 0 }
                   { ...this.props } />
               );
             })
