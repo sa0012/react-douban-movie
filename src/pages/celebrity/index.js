@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { getCelebrity, getCelebrityWorks } from '../../store/actions/celebrity';
+import { addFilmMarker, lessFilmMarker } from '../../store/actions/collect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import $ from '../../util';
+import { setStore, getStore } from '../../util/mUtils';
 import Header from '../../components/Header';
 import Star from '../../components/star';
 import '../../assets/style/celebrity/index.scss';
@@ -12,6 +14,8 @@ function mapDispatchToProps(dispatch) {
 	return {
 		getCelebrity: bindActionCreators(getCelebrity, dispatch),
 		getCelebrityWorks: bindActionCreators(getCelebrityWorks, dispatch),
+		addFilmMarker: bindActionCreators(addFilmMarker, dispatch),
+		lessFilmMarker: bindActionCreators(lessFilmMarker, dispatch),
 	}
 }
 
@@ -23,7 +27,9 @@ class Celebrity extends Component {
 		this.state = {
 			detailId: '',
 			celebrity: {},
-			avatar: ''
+      avatar: '',
+      filmerKey: '',
+      isCollectFilmer: {}
 		}
 	}
 
@@ -32,7 +38,17 @@ class Celebrity extends Component {
 		let detailId = pathname.split('/')[2];
 		this.setState({
 			detailId: detailId
-		});
+		}, res => {
+      try {
+        let isFilmerKey = `filmer${this.state.detailId}`;
+        this.setState({
+          isCollectFilmer: Object.assign({ [isFilmerKey]: false }, JSON.parse(getStore('celebrityState')) || {}),
+          filmerKey: isFilmerKey,
+        }, res => {
+          console.log(this.state.isCollectFilmer, 'slslslsl')
+        })
+      } catch(e) {}
+    });
 
 		this.getCelebrity(detailId)
 	}
@@ -88,14 +104,44 @@ class Celebrity extends Component {
 					</div>
 					<div className="caw-user-attention"></div>
 					<div className="caw-user-attbtn"></div>
-					<div className="caw-collection-btn caw-item">
+          <div 
+            className="caw-collection-btn caw-item" 
+            style={ this.state.isCollectFilmer[this.state.filmerKey] ? { backgroundColor: '#333', color: '#fff' } : { backgroundColor: 'green', color: '#fff' } } 
+            onClick={ () => this.collectFilmers(detail) }>
 						<i className="iconfont icon-collect caw-collect-icon"></i>
-						<span className="caw-collect-text">收藏影人</span>
+						<span className="caw-collect-text">
+              { this.state.isCollectFilmer[this.state.filmerKey] ? '已收藏影人' : '收藏影人' }
+            </span>
 					</div>
 				</div>
 			</div>
 		);
-	}
+  }
+  
+  collectFilmers = async (detail) => {
+    console.log(detail, 'detail')
+    await new Promise((resolve, reject) => {
+      resolve();
+      let filmerObj = this.state.isCollectFilmer || {};
+      console.log(this.state.filmerKey, 'key')
+      filmerObj[this.state.filmerKey] = !filmerObj[this.state.filmerKey];
+
+      this.setState({
+        isCollectFilmer: Object.assign({}, filmerObj),
+      }, res => {
+        setStore('celebrityState', this.state.isCollectFilmer)
+      });
+    });
+
+    await new Promise((resolve, reject) => {
+      resolve();
+      if (this.state.isCollectFilmer[this.state.filmerKey]) {
+        this.props.addFilmMarker(detail);
+      } else {
+        this.props.lessFilmMarker(detail.id);
+      }
+    })
+  }
 
 	masterpieceRender = (works = []) => {
 		return (

@@ -239,8 +239,8 @@ class SearchDetail extends Component {
     return (
       <div className="search-history">
         <div className="history-top">
-          <div className="history-text">搜索历史</div>
-          <div>
+          <div className="history-text" style={{ flex: 1 }}>搜索历史</div>
+          <div style={{ width: '18px', height: '18px', flex: '0 0 18px' }}>
             <i className="iconfont icon-bin history-bin" onClick={ () => this.clearAllSearchHistory() }></i>
           </div>
         </div>
@@ -261,7 +261,7 @@ class SearchDetail extends Component {
             return (
               <li className="his-item" key={ index }>
                 <div style={{ flex: 1 }} onClick={ () => this.searchTags(item) }>{ item }</div>
-                <div>
+                <div style={{ width: '18px', height: '18px', flex: '0 0 18px' }}>
                   <i className="iconfont icon-bin history-bin" onClick={ () => this.clearSingleSearchHistory(index) }></i>
                 </div>
               </li>

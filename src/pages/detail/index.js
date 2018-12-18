@@ -240,7 +240,6 @@ class MovieDetial extends Component {
         isCollectWish: Object.assign({}, wishWatchObj),
         isCollectSeen: Object.assign({}, seenWatchObj)
       }, res => {
-        console.log(this.state.isCollectWish, 'wish')
         if (type === 'wish') {
           setStore('wishWatchMovie', this.state.isCollectWish || {})
         } else if (type === 'seen') {
@@ -251,10 +250,18 @@ class MovieDetial extends Component {
 
     await new Promise((resolve, reject) => {
       resolve();
-      if (this.state.isCollectWish) {
-        this.props.addWishMovie(this.state.detailContent);
-      } else {
-        this.props.lessWishMovie(this.state.detailContent.id);
+      if (type === 'wish') {
+        if (this.state.isCollectWish[this.state.wishKey]) {
+          this.props.addWishMovie(this.state.detailContent);
+        } else {
+          this.props.lessWishMovie(this.state.detailContent.id);
+        }
+      } else if (type === 'seen') {
+        if (this.state.isCollectSeen[this.state.seenKey]) {
+          this.props.addSeenMovie(this.state.detailContent);
+        } else {
+          this.props.lessSeenMovie(this.state.detailContent.id);
+        }
       }
     })
   }
