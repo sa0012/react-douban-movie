@@ -70,21 +70,27 @@ class Info extends Component {
                   <div key={ index }>
                     {
                       index === 0 ? (
-                        <MovieCard 
-                          cardList={ wishMovieList }
-                          loadMoreMovie={ this.loadMoreWish }
-                          pTop={ 0 }
-                          { ...this.props } />
+                        <div style={{ paddingBottom: '60px' }}>
+                          <MovieCard 
+                            cardList={ wishMovieList }
+                            loadMoreMovie={ this.loadMoreWish }
+                            pTop={ 0 }
+                            { ...this.props } />
+                        </div>
                       ) : index === 1 ? (
-                        <MovieCard 
-                          cardList={ seenMovieList }
-                          loadMoreMovie={ this.loadMoreWish }
-                          pTop={ 0 }
-                          { ...this.props } />
+                        <div style={{ paddingBottom: '60px' }}>
+                          <MovieCard 
+                            cardList={ seenMovieList }
+                            loadMoreMovie={ this.loadMoreWish }
+                            pTop={ 0 }
+                            { ...this.props } />
+                        </div>
                       ) : (
-                        <FilmerCard 
-                          filmerList={ filmMarkerList }
-                          { ...this.props }/>
+                        <div style={{ paddingBottom: '60px' }}>
+                          <FilmerCard 
+                            filmerList={ filmMarkerList }
+                            { ...this.props }/>
+                        </div>
                       )
                     }
                   </div>
