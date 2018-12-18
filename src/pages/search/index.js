@@ -240,7 +240,9 @@ class SearchDetail extends Component {
       <div className="search-history">
         <div className="history-top">
           <div className="history-text">搜索历史</div>
-          <i className="iconfont icon-bin history-bin" onClick={ () => this.clearAllSearchHistory() }></i>
+          <div>
+            <i className="iconfont icon-bin history-bin" onClick={ () => this.clearAllSearchHistory() }></i>
+          </div>
         </div>
         {
           this.searchHistoryList()
@@ -258,8 +260,10 @@ class SearchDetail extends Component {
           historyList && historyList.length > 0 ? historyList.map((item, index) => {
             return (
               <li className="his-item" key={ index }>
-                <div>{ item }</div>
-                <i className="iconfont icon-bin history-bin" onClick={ () => this.clearSingleSearchHistory(index) }></i>
+                <div style={{ flex: 1 }} onClick={ () => this.searchTags(item) }>{ item }</div>
+                <div>
+                  <i className="iconfont icon-bin history-bin" onClick={ () => this.clearSingleSearchHistory(index) }></i>
+                </div>
               </li>
             );
           }) : (
