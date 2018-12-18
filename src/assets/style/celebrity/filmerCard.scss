@@ -1,0 +1,43 @@
+@import '../mixin';
+.filmer-list {
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+  .filmer-item {
+    display: flex;
+    align-items: center;
+    @include  border-bottom-1px(#ccc);
+
+    .info-img {
+      width: 80px;
+      flex: 0 0 80px;
+      margin-right: 20px;
+      padding: 15px 0;
+    }
+
+    .filmer-mes {
+      flex: 1;
+      overflow: hidden;
+      .filmer-name {
+        padding: 10px 0;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .filmer-professions {
+        display: flex;
+        padding: 10px 0;
+
+        .filmer-professions-title {
+          min-width: 60px;
+          flex: 0 0 60px;
+        }
+
+        .filmer-professions-wrap {
+          flex: 1;
+          @include no-wrap;
+        }
+      }
+    }
+  }
+}

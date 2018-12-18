@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Avatar from '../../assets/images/avatar.jpg';
 import '../../assets/style/userInfo/index.scss';
-
 import {increment } from '../../store/action'
 import { movie_show } from '../../store/actions/movie-show';
+import MovieCard from '../../components/movieCard';
+import FilmerCard from '../../components/filmerCard';
+
 function mapDispatchToProps(dispatch) {
   return {
     increment: bindActionCreators(increment, dispatch),
@@ -49,6 +51,8 @@ class Info extends Component {
       { title: '看过' },
       { title: '影人' },
     ];
+
+    const { wishMovieList, seenMovieList, filmMarkerList } = this.props;
     return (
       <div>
         <WhiteSpace />
@@ -64,26 +68,37 @@ class Info extends Component {
               tabs.map((item, index) => {
                 return (
                   <div key={ index }>
-                    <div 
-                    style={{ width: '100px', height: '40px', textAlign: 'center', lineHeight: '40px', backgroundColor: 'green' }}
-                    onClick={ () => this.handleclick() }>{ item.title }</div>
+                    {
+                      index === 0 ? (
+                        <MovieCard 
+                          cardList={ wishMovieList }
+                          loadMoreMovie={ this.loadMoreWish }
+                          pTop={ 0 }
+                          { ...this.props } />
+                      ) : index === 1 ? (
+                        <MovieCard 
+                          cardList={ seenMovieList }
+                          loadMoreMovie={ this.loadMoreWish }
+                          pTop={ 0 }
+                          { ...this.props } />
+                      ) : (
+                        <FilmerCard 
+                          filmerList={ filmMarkerList }
+                          { ...this.props }/>
+                      )
+                    }
                   </div>
                 );
               })
             }
           </Tabs>
         <WhiteSpace />
-        {/* <NavBar /> */}
       </div>
     );
   }
 
-  handleclick = () => {
-    // this.props.increment(10, 'increment')
-    this.props.movie_show({
-      count: 10,
-      id: 1299999
-    })
+  loadMoreWish = (callback) => {
+    callback && callback();
   }
 
   topAvatar = () => {

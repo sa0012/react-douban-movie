@@ -24,13 +24,15 @@ class MovieCard extends Component {
   static defaultProps = {
     cardList: [],
     loadMoreMovie: Function,
-    isRefresh: false
+    isRefresh: false,
+    pTop: 60
   }
 
   static propTypes = {
     cardList: PropTypes.array,
     loadMoreMovie: PropTypes.func,
-    isRefresh: PropTypes.bool
+    isRefresh: PropTypes.bool,
+    pTop: PropTypes.number
   }
 
   componentDidMount() {
@@ -78,7 +80,7 @@ class MovieCard extends Component {
       <ul className={ classNames({
         'movie-list': true,
         'no-refresh': !this.props.isRefresh
-      }) }>
+      }) } style={{ paddingTop: `${this.props.pTop}px` }}>
         {
           movies.map((movie, index) => {
             movie = movie.subject ? movie.subject : movie;
